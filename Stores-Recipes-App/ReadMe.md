@@ -1,0 +1,1 @@
+1.Consider every user is the owner of the Store

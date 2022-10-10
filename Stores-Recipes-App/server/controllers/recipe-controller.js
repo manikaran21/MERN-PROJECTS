@@ -10,7 +10,7 @@ export const getAllRecipes = async (req,res,next) => {
         return console.log(err) ;
     }
     if(!recipes){
-        return res.status(404).json({message:"No Recipes Found"}) ;
+        return res.status(404).json({message:"Not Found"}) ;
     }
 
     return res.status(200).json({recipes}) ;
@@ -18,7 +18,7 @@ export const getAllRecipes = async (req,res,next) => {
 } ;
 
 export const addRecipe =async(req,res,next) => {
-  const { name ,description ,image ,ingredients,category,  user } = req.body ;
+  const { name ,price ,image ,coupon,discount,  user } = req.body ;
    
   let existingUser ;
   try{
@@ -33,9 +33,9 @@ export const addRecipe =async(req,res,next) => {
   // new instance
   const recipe = new Recipe( {
        name,
-       description,
-       ingredients,
-       category,
+       price,
+       coupon,
+       discount,
        image,
        user 
     }) ;
@@ -58,23 +58,23 @@ export const addRecipe =async(req,res,next) => {
 } ;
 
 export const updateRecipe = async(req,res,next) => {
-    const {name,description,ingredients,category,image} = req.body ;
+  const { name ,price ,image ,coupon,discount,  user } = req.body ;
     const recipeId = req.params.id ;
     let recipe ;
     try{
         recipe = await Recipe.findByIdAndUpdate(recipeId ,{
-            name,
-            description,
-            ingredients,
-            category,
-            image
+          name,
+          price,
+          coupon,
+          discount,
+          image,
         }) ;
     
     }catch(err){
         return console.log(err) ;
     }
     if(!recipe){
-        return res.status(500).json({message:"Unable to update the Recipe"}) ;
+        return res.status(500).json({message:"Unable to update "}) ;
     }
     return res.status(200).json({recipe}) ; 
 } ;
@@ -88,7 +88,7 @@ export const getById = async(req,res,next) => {
     return console.log(err) ;
    }
    if(!recipe){
-    return res.status(404).json({message:"No Recipe Found"}) ;
+    return res.status(404).json({message:"Not Found"}) ;
    }
    return res.status(200).json({recipe}) ;
  } ;
@@ -123,7 +123,7 @@ export const getById = async(req,res,next) => {
     return console.log(err) ;
    }
    if(!userRecipes){
-    return res.status(404).json({message:"No Recipes found"}) ;
+    return res.status(404).json({message:"Not found"}) ;
    }
    return res.status(200).json({user:userRecipes}) ;
  } ;
